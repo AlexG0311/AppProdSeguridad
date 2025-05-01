@@ -1,0 +1,39 @@
+body{
+    background-color: black;
+}
+.nav{
+    text-align: center;
+    background-color: #919090;
+}
+.header {
+   
+    background-color: #F1F1F1;
+    text-align: center;
+    padding: 20px;
+  }
+
+
+
+.header{
+   color: aliceblue;
+    background-color: blue;
+}
+
+
+.footer{
+    
+    background-color: #070101;
+    text-align: center;
+    padding: 10px;
+}
+
+h1{
+    color:rgb(255, 255, 255);
+}
+
+div{
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
+}
+
