@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/App.css">
+    <link rel="stylesheet" href="./Vistas/css/App.css">
     <title>Productos de Seguridad</title>
 </head>
 <body>
@@ -12,12 +12,12 @@
             <div class="logo">Productos de Seguridad</div>
             <nav>
                 <div class="nav-01">
-                    <a href="inicio.php">Inicio</a>
-                    <a href="catalogo.php">Productos</a>
-                    <a href="cursos.php">Cursos</a>
-                    <a href="carrito.php">Carrito</a>
-                    <a href="index.php">Registrarse</a>
-                    <a href="login.php">Login</a>
+                    <a href="index.php">Inicio</a>
+                    <a href="Vistas/catalogo.php">Productos</a>
+                    <a href="Vistas/cursos.php">Cursos</a>
+                    <a href="Vistas/carrito.php">Carrito</a>
+                    <a href="Vistas/register.php">Registrarse</a>
+                    <a href="Vistas/login.php">Login</a>
                 </div>
             </nav>
         </header>
