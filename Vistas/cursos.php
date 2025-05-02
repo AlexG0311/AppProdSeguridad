@@ -48,7 +48,7 @@ $cursos = [
             <div class="logo">Productos de Seguridad</div>
             <nav>
                 <div class="nav-01">
-                    <a href="index.php">Inicio</a>
+                    <a href="inicio.php">Inicio</a>
                     <a href="index.php#catalog">Productos</a>
                     <a href="mis_cursos.php">Mis Cursos</a>
                     <a href="carrito.php">Carrito</a>

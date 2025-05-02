@@ -1,0 +1,57 @@
+/* css/register.css */
+
+/* Sección Registro */
+.register {
+    padding: 60px 40px;
+    background-color: #fff;
+}
+
+.section-content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-content h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.section-content p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #1abc9c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .register {
+        padding: 40px 20px;
+    }
+}
