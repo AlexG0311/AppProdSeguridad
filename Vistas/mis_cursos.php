@@ -38,7 +38,7 @@ $progress = [
             <div class="logo">Productos de Seguridad</div>
             <nav>
                 <div class="nav-01">
-                    <a href="index.php">Inicio</a>
+                    <a href="../index.php">Inicio</a>
                     <a href="catalog.php">Productos</a>
                     <a href="cursos.php">Cursos</a>
                     <a href="carrito.php">Carrito</a>

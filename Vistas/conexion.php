@@ -1,17 +1,21 @@
 <?php
-$host = 'b6crm08367uc9krcpzqz-mysql.services.clever-cloud.com';
-$dbname = 'b6crm08367uc9krcpzqz';
-$username = 'uwjchdo4sengxjgy';
-$password = 'TXVQHjr5cxe8Zgvcuhzw';
-$port = 3306; // Puerto predeterminado de MySQL, ajusta si es necesario
+// Cargar el archivo .env
+require_once __DIR__ . '/../vendor/autoload.php'; // Si vendor está en la raíz
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+// Obtener las variables de entorno
+$host = $_ENV['DB_HOST'];
+$dbname = $_ENV['DB_NAME'];
+$username = $_ENV['DB_USER'];
+$password = $_ENV['DB_PASS'];
+$port = $_ENV['DB_PORT'] ?: 3306;
 
 // Intentar la conexión
 $conexion = mysqli_connect($host, $username, $password, $dbname, $port);
 
-if ($conexion) {
-    echo "Conexión Exitosa :) ";
-} else {
-    // Mostrar el error específico
+if (!$conexion) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 ?>

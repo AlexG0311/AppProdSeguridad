@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_compra'])) 
             <div class="logo">Productos de Seguridad</div>
             <nav>
                 <div class="nav-01">
-                    <a href="inicio.php">Inicio</a>
+                    <a href="../index.php">Inicio</a>
                     <a href="catalogo.php#catalog">Productos</a>
                     <a href="cursos.php">Cursos</a>
                     <a href="#">Contacto</a>
@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_compra'])) 
                         <h2>¡Compra Confirmada!</h2>
                         <p>Gracias por tu compra. Hemos enviado una confirmación a tu correo electrónico.</p>
                         <pre><?php echo htmlspecialchars($email_notificacion); ?></pre>
-                        <a href="inicio.php" class="btn-secondary">Volver al Inicio</a>
+                        <a href="index.php" class="btn-secondary">Volver al Inicio</a>
                     </div>
                 <?php endif; ?>
             </div>

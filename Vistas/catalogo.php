@@ -77,7 +77,7 @@ $filtered_products = array_filter($products, function($product) use ($category_f
             <div class="logo">Productos de Seguridad</div>
             <nav>
                 <div class="nav-01">
-                    <a href="inicio.php">Inicio</a>
+                    <a href="../index.php">Inicio</a>
                     <a href="catalogo.php">Productos</a>
                     <a href="cursos.php">Cursos</a>
                     <a href="carrito.php">Carrito</a>
