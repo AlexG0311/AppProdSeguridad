@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_compra'])) 
                         <h2>¡Compra Confirmada!</h2>
                         <p>Gracias por tu compra. Hemos enviado una confirmación a tu correo electrónico.</p>
                         <pre><?php echo htmlspecialchars($email_notificacion); ?></pre>
-                        <a href="index.php" class="btn-secondary">Volver al Inicio</a>
+                        <a href="../index.php" class="btn-secondary">Volver al Inicio</a>
                     </div>
                 <?php endif; ?>
             </div>
