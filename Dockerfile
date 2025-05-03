@@ -10,8 +10,8 @@ RUN a2enmod rewrite
 # Copiar los archivos de tu proyecto al directorio raíz del servidor
 COPY . /var/www/html/
 
-# Cambiar el DocumentRoot a la carpeta Vistas
-RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/Vistas|' /etc/apache2/sites-available/000-default.conf
+# Listar los archivos en /var/www/html para depuración
+RUN ls -la /var/www/html/
 
 # Asegurar permisos adecuados
 RUN chown -R www-data:www-data /var/www/html \
