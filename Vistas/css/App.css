@@ -21,54 +21,15 @@ body {
     min-height: 100vh;
 }
 
-/* Header */
-header {
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-    position: absolute;
-    width: 100%;
-    top: 0;
-    z-index: 10;
-}
 
-.logo {
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-/* Navegación */
-nav {
-    display: flex;
-    align-items: center;
-}
-
-.nav-01 {
-    display: flex;
-    gap: 20px;
-}
-
-.nav-01 a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 8px 12px;
-    transition: all 0.3s ease;
-}
 
 .nav-01 a:hover {
     background-color: #1abc9c;
     border-radius: 5px;
+    
 }
 
-.tex-inicio-header{
-    color: white;
-    font: b;
-}
+
 
 /* Sección Hero */
 .hero {
@@ -623,101 +584,4 @@ footer {
 
 .footer-content p {
     font-size: 0.9rem;
-}
-
-/* Responsividad */
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        padding: 10px 20px;
-    }
-
-    .logo {
-        margin-bottom: 10px;
-    }
-
-    .nav-01 {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .nav-01 a {
-        font-size: 0.9rem;
-        padding: 6px 10px;
-    }
-
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-
-    .hero-content p {
-        font-size: 1rem;
-    }
-
-    .btn-hero {
-        padding: 12px 25px;
-        font-size: 1rem;
-    }
-
-    .products,
-    .catalog,
-    .courses,
-    .product-detail,
-    .training-programs,
-    .cart {
-        padding: 40px 20px;
-    }
-
-    .section-content h1 {
-        font-size: 2.5rem;
-    }
-
-    .section-content h2 {
-        font-size: 2rem;
-    }
-
-    .catalog-container {
-        flex-direction: column;
-    }
-
-    .filters {
-        padding: 15px;
-    }
-
-    .course-item {
-        flex-direction: column;
-    }
-
-    .course-item img {
-        width: 100%;
-        height: 200px;
-    }
-
-    .product-detail-container {
-        flex-direction: column;
-    }
-
-    .btn-add-to-cart {
-        padding: 12px 25px;
-        font-size: 1rem;
-    }
-
-    .training-item {
-        padding: 15px;
-    }
-
-    .training-actions {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .cart-item {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-
-    .cart-total {
-        text-align: center;
-    }
 }

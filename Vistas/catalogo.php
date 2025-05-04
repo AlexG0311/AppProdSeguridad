@@ -1,65 +1,44 @@
 <?php
 session_start();
 
-// Simulación de datos de productos (puedes reemplazar con base de datos)
-$products = [
-    [
-        'id' => 1,
-        'nombre' => 'Casco de Seguridad',
-        'categoria' => 'casco',
-        'marca' => 'marca1',
-        'precio' => 45,
-        'imagen' => 'https://via.placeholder.com/200x200?text=Casco',
-    ],
-    [
-        'id' => 2,
-        'nombre' => 'Guantes Industriales',
-        'categoria' => 'guantes',
-        'marca' => 'marca2',
-        'precio' => 30,
-        'imagen' => 'https://via.placeholder.com/200x200?text=Guantes',
-    ],
-    [
-        'id' => 3,
-        'nombre' => 'Gafas de Protección',
-        'categoria' => 'gafas',
-        'marca' => 'marca1',
-        'precio' => 25,
-        'imagen' => 'https://via.placeholder.com/200x200?text=Gafas',
-    ],
-    [
-        'id' => 4,
-        'nombre' => 'Arnés de Seguridad',
-        'categoria' => 'arnes',
-        'marca' => 'marca3',
-        'precio' => 80,
-        'imagen' => 'https://via.placeholder.com/200x200?text=Arnés',
-    ],
-];
+// Incluir la conexión a la base de datos
+require_once 'conexion.php';
 
 // Obtener los valores de los filtros desde GET
 $category_filter = isset($_GET['category']) ? $_GET['category'] : '';
 $brand_filter = isset($_GET['brand']) ? $_GET['brand'] : '';
 $price_filter = isset($_GET['price']) ? $_GET['price'] : '';
 
+// Consultar todos los productos desde la base de datos
+$query = "SELECT * FROM products";
+$stmt = mysqli_prepare($conexion, $query);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$products = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
 // Filtrar los productos
-$filtered_products = array_filter($products, function($product) use ($category_filter, $brand_filter, $price_filter) {
-    $category_match = empty($category_filter) || $product['categoria'] === $category_filter;
-    $brand_match = empty($brand_filter) || $product['marca'] === $brand_filter;
+$filtered_products = array_filter($products, function($product)
+     use ($category_filter, $brand_filter, $price_filter) {
+    $category_match = empty($category_filter) || strtolower($product['category']) === strtolower($category_filter);
+    $brand_match = empty($brand_filter) || strtolower($product['brand']) === strtolower($brand_filter);
     $price_match = true;
 
     if (!empty($price_filter)) {
         if ($price_filter === '0-50') {
-            $price_match = $product['precio'] >= 0 && $product['precio'] <= 50;
+            $price_match = $product['price'] >= 0 && $product['price'] <= 50;
         } elseif ($price_filter === '50-100') {
-            $price_match = $product['precio'] > 50 && $product['precio'] <= 100;
+            $price_match = $product['price'] > 50 && $product['price'] <= 100;
         } elseif ($price_filter === '100+') {
-            $price_match = $product['precio'] > 100;
+            $price_match = $product['price'] > 100;
         }
     }
 
     return $category_match && $brand_match && $price_match;
 });
+
+// Cerrar el statement y la conexión
+mysqli_stmt_close($stmt);
+mysqli_close($conexion);
 ?>
 
 <!DOCTYPE html>
@@ -67,25 +46,36 @@ $filtered_products = array_filter($products, function($product) use ($category_f
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/App.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Catálogo - Productos de Seguridad</title>
 </head>
 <body>
     <div id="contenedor">
-        <header>
-            <div class="logo">Productos de Seguridad</div>
-            <nav>
-                <div class="nav-01">
+        <nav>
+            <div class="nav-01">
+                <input type="checkbox" id="sidebar-active">
+                <label for="sidebar-active" class="open-sidebar-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+                </label>
+                <label id="overlay" for="sidebar-active"></label>
+                <div class="links-container">
+                    <label for="sidebar-active" class="close-sidebar-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                    </label>
                     <a href="../index.php">Inicio</a>
                     <a href="catalogo.php">Productos</a>
                     <a href="cursos.php">Cursos</a>
                     <a href="carrito.php">Carrito</a>
-                    <a href="index.php">Registrarse</a>
-                    <a href="login.php">Login</a>
+                    <?php if (!isset($_SESSION['isAuthenticated']) || !$_SESSION['isAuthenticated']): ?>
+                        <a href="register.php">Registrarse</a>
+                        <a href="login.php">Login</a>
+                    <?php else: ?>
+                        <a href="logout.php">Cerrar Sesión</a>
+                    <?php endif; ?>
                 </div>
-            </nav>
-        </header>
+            </div>
+        </nav>
         <section class="catalog">
             <div class="section-content">
                 <h1>Catálogo de Equipos de Seguridad</h1>
@@ -131,9 +121,9 @@ $filtered_products = array_filter($products, function($product) use ($category_f
                         <?php else: ?>
                             <?php foreach ($filtered_products as $product): ?>
                                 <div class="catalog-item">
-                                    <img src="<?php echo htmlspecialchars($product['imagen']); ?>" alt="<?php echo htmlspecialchars($product['nombre']); ?>">
-                                    <h3><?php echo htmlspecialchars($product['nombre']); ?></h3>
-                                    <p><?php echo htmlspecialchars($product['marca']); ?> - $<?php echo htmlspecialchars($product['precio']); ?></p>
+                                    <img src="<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                                    <h3><?php echo htmlspecialchars($product['name']); ?></h3>
+                                    <p><?php echo htmlspecialchars($product['brand']); ?> - $<?php echo htmlspecialchars($product['price']); ?></p>
                                     <a href="producto.php?id=<?php echo $product['id']; ?>" class="btn-secondary">Ver Detalles</a>
                                 </div>
                             <?php endforeach; ?>
@@ -142,7 +132,7 @@ $filtered_products = array_filter($products, function($product) use ($category_f
                 </div>
             </div>
         </section>
-        <footer>
+                            <footer>
             <div class="footer-content">
                 <h3>Productos de Seguridad</h3>
                 <p>© 2025 Todos los derechos reservados.</p>
@@ -150,4 +140,4 @@ $filtered_products = array_filter($products, function($product) use ($category_f
         </footer>
     </div>
 </body>
-</html>
+    </html>

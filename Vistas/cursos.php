@@ -1,37 +1,19 @@
 <?php
 session_start();
 
-// Simulación de datos de cursos (puedes reemplazar con una base de datos)
-$cursos = [
-    1 => [
-        'nombre' => 'Trabajo en Alturas',
-        'duracion' => '16 horas',
-        'nivel' => 'Intermedio',
-        'costo' => 120,
-        'descripcion' => 'Aprende las mejores prácticas para trabajos en altura de forma segura.',
-    ],
-    2 => [
-        'nombre' => 'Primeros Auxilios',
-        'duracion' => '8 horas',
-        'nivel' => 'Básico',
-        'costo' => 80,
-        'descripcion' => 'Prepárate para responder ante emergencias médicas en el trabajo.',
-    ],
-    3 => [
-        'nombre' => 'Manejo de Sustancias Peligrosas',
-        'duracion' => '12 horas',
-        'nivel' => 'Avanzado',
-        'costo' => 150,
-        'descripcion' => 'Capacitación para el manejo seguro de sustancias químicas peligrosas.',
-    ],
-    4 => [
-        'nombre' => 'Uso de EPP',
-        'duracion' => '4 horas',
-        'nivel' => 'Básico',
-        'costo' => 50,
-        'descripcion' => 'Entrenamiento en el uso correcto de Equipos de Protección Personal.',
-    ],
-];
+// Incluir la conexión a la base de datos
+require_once 'conexion.php';
+
+// Consultar todos los cursos desde la base de datos
+$query = "SELECT * FROM courses";
+$stmt = mysqli_prepare($conexion, $query);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$cursos = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+// Cerrar el statement y la conexión
+mysqli_stmt_close($stmt);
+mysqli_close($conexion);
 ?>
 
 <!DOCTYPE html>
@@ -40,38 +22,51 @@ $cursos = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/App.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Cursos de Seguridad - Productos de Seguridad</title>
 </head>
 <body>
     <div id="contenedor">
-        <header>
-            <div class="logo">Productos de Seguridad</div>
-            <nav>
-                <div class="nav-01">
+        <nav>
+            <div class="nav-01">
+                <input type="checkbox" id="sidebar-active">
+                <label for="sidebar-active" class="open-sidebar-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+                </label>
+                <label id="overlay" for="sidebar-active"></label>
+                <div class="links-container">
+                    <label for="sidebar-active" class="close-sidebar-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                    </label>
                     <a href="../index.php">Inicio</a>
-                    <a href="index.php#catalog">Productos</a>
+                    <a href="catalogo.php">Productos</a>
                     <a href="mis_cursos.php">Mis Cursos</a>
                     <a href="carrito.php">Carrito</a>
-                    <a href="#">Contacto</a>
+                    <?php if (!isset($_SESSION['isAuthenticated']) || !$_SESSION['isAuthenticated']): ?>
+                        <a href="register.php">Registrarse</a>
+                        <a href="login.php">Login</a>
+                    <?php else: ?>
+                        <a href="logout.php">Cerrar Sesión</a>
+                    <?php endif; ?>
                 </div>
-            </nav>
-        </header>
+            </div>
+        </nav>
         <section class="training-programs">
             <div class="section-content">
                 <h1>Programas de Capacitación</h1>
                 <p>Explora nuestros cursos y certificaciones diseñados para mejorar la seguridad en tu entorno laboral.</p>
                 <div class="training-grid">
-                    <?php foreach ($cursos as $id => $curso): ?>
+                    <?php foreach ($cursos as $curso): ?>
                         <div class="training-item">
-                            <h3><?php echo htmlspecialchars($curso['nombre']); ?></h3>
-                            <p class="description"><?php echo htmlspecialchars($curso['descripcion']); ?></p>
+                            <h3><?php echo htmlspecialchars($curso['name']); ?></h3>
+                            <p class="description"><?php echo htmlspecialchars($curso['description']); ?></p>
                             <ul class="course-details">
-                                <li><strong>Duración:</strong> <?php echo htmlspecialchars($curso['duracion']); ?></li>
-                                <li><strong>Nivel:</strong> <?php echo htmlspecialchars($curso['nivel']); ?></li>
-                                <li><strong>Costo:</strong> $<?php echo number_format($curso['costo'], 2); ?></li>
+                                <li><strong>Duración:</strong> <?php echo htmlspecialchars($curso['duration']); ?></li>
+                                <li><strong>Nivel:</strong> <?php echo htmlspecialchars($curso['level']); ?></li>
+                                <li><strong>Costo:</strong> $<?php echo number_format($curso['cost'], 2); ?></li>
                             </ul>
                             <div class="training-actions">
-                                <a href="carrito.php?action=add&tipo=curso&id=<?php echo $id; ?>" class="btn-secondary">Inscribirse</a>
+                                <a href="carrito.php?action=add&tipo=curso&id=<?php echo $curso['id']; ?>" class="btn-secondary">Inscribirse</a>
                                 <a href="#" class="btn-info">Más Información</a>
                             </div>
                         </div>

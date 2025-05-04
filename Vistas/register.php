@@ -1,5 +1,6 @@
 <?php
 require_once 'conexion.php';
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
@@ -40,23 +41,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Registro - Productos de Seguridad</title>
 </head>
 <body>
     <div id="contenedor">
-        <header>
-            <div class="logo">Productos de Seguridad</div>
-            <nav>
-                <div class="nav-01">
-                    <a href="../index.php">Inicio</a>
-                    <a href="catalogo.php">Productos</a>
-                    <a href="cursos.php">Cursos</a>
-                    <a href="carrito.php">Carrito</a>
-                    <a href="login.php">Iniciar Sesión</a>
-                    <a href="register.php">Registrarse</a>
-                </div>
-            </nav>
-        </header>
+    <nav>
+    <div class="nav-01">
+        <input type="checkbox" id="sidebar-active">
+        <label for="sidebar-active" class="open-sidebar-button">
+            <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+        </label>
+        <label id="overlay" for="sidebar-active"></label>
+        <div class="links-container">
+            <label for="sidebar-active" class="close-sidebar-button">
+                <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+            </label>
+            <a href="../index.php">Inicio</a>
+            <a href="catalogo.php">Productos</a>
+            <a href="cursos.php">Cursos</a>
+            <a href="carrito.php">Carrito</a>
+            <?php if (!isset($_SESSION['isAuthenticated']) || !$_SESSION['isAuthenticated']): ?>
+                <a href="register.php">Registrarse</a>
+                <a href="login.php">Login</a>
+            <?php else: ?>
+                <a href="logout.php">Cerrar Sesión</a>
+            <?php endif; ?>
+        </div>
+    </div>
+</nav>
         <section class="register">
             <div class="section-content">
                 <h1>Registro</h1>
